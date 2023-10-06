@@ -8,7 +8,7 @@ const room = model.room;
 const roomType = model.room_type;
 const customer = model.customer;
 
-const addBookingRoom = async (req, res) => {
+const addBookingRoom = async(req, res) => {
     try {
         const data = {
             id_user: req.body.id_user,
@@ -56,26 +56,22 @@ const addBookingRoom = async (req, res) => {
         //cek room yang ada pada tabel booking_detail
         let dataBooking = await roomType.findAll({
             where: { id_room_type: data.id_room_type },
-            include: [
-                {
-                    model: room,
-                    as: "room",
-                    attributes: ["id_room", "id_room_type"],
-                    include: [
-                        {
-                            model: detailBooking,
-                            as: "detail_booking",
-                            attributes: ["access_date"],
-                            where: {
-                                access_date: {
-                                    [Op.between]: [data.check_in_date, data.check_out_date]
-                                }
-                            }
+            include: [{
+                model: room,
+                as: "room",
+                attributes: ["id_room", "id_room_type"],
+                include: [{
+                    model: detailBooking,
+                    as: "detail_booking",
+                    attributes: ["access_date"],
+                    where: {
+                        access_date: {
+                            [Op.between]: [data.check_in_date, data.check_out_date]
                         }
-                    ]
+                    }
+                }]
 
-                }
-            ]
+            }]
         })
 
         // get available rooms
@@ -100,7 +96,7 @@ const addBookingRoom = async (req, res) => {
             }
 
             const result = await booking.create(data)
-            //add detail
+                //add detail
             for (let i = 0; i < dayTotal; i++) {
                 for (let j = 0; j < roomsDataSelected.length; j++) {
                     const accessDate = new Date(checkInDate)
@@ -139,7 +135,7 @@ const addBookingRoom = async (req, res) => {
     }
 };
 
-const deleteOneBooking = async (req, res) => {
+const deleteOneBooking = async(req, res) => {
     try {
         const idBooking = req.params.id_booking
         const findDataBooking = await booking.findOne({
@@ -176,7 +172,7 @@ const deleteOneBooking = async (req, res) => {
     }
 }
 
-const updateStatusBooking = async (req, res) => {
+const updateStatusBooking = async(req, res) => {
     try {
         const params = { id_booking: req.params.id_booking }
 
@@ -220,7 +216,7 @@ const updateStatusBooking = async (req, res) => {
     }
 }
 
-const getOneBooking = async (req, res) => {
+const getOneBooking = async(req, res) => {
     try {
         const params = {
             id_booking: req.params.id_booking,
@@ -249,7 +245,7 @@ const getOneBooking = async (req, res) => {
     }
 };
 
-const getAllBooking = async (req, res) => {
+const getAllBooking = async(req, res) => {
     try {
         const result = await booking.findAll({
             include: ["room_type"],
@@ -270,7 +266,7 @@ const getAllBooking = async (req, res) => {
 };
 
 // filter by checkInDate
-const findBookingDataFilter = async (req, res) => {
+const findBookingDataFilter = async(req, res) => {
     try {
         const keyword = req.body.keyword
         const checkInDate = new Date(req.body.check_in_date);
@@ -280,11 +276,21 @@ const findBookingDataFilter = async (req, res) => {
             include: ["user", "room_type", "customer"],
             where: {
                 [Op.or]: {
-                    booking_number: { [Op.like]: `%${keyword}%` },
-                    name_customer: { [Op.like]: `%${keyword}%` },
-                    email: { [Op.like]: `%${keyword}%` },
-                    guest_name: { [Op.like]: `%${keyword}%` },
-                    booking_status: { [Op.like]: `%${keyword}%` },
+                    booking_number: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                    name_customer: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                    email: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                    guest_name: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                    booking_status: {
+                        [Op.like]: `%${keyword}%`
+                    },
                     check_in_date: {
                         [Op.between]: [checkInDate, checkOutDate],
                     },
@@ -305,7 +311,7 @@ const findBookingDataFilter = async (req, res) => {
     }
 };
 
-const findBookingByNameCustomer = async (req, res) => {
+const findBookingByNameCustomer = async(req, res) => {
     try {
         const keyword = req.body.keyword;
 
@@ -313,7 +319,9 @@ const findBookingByNameCustomer = async (req, res) => {
             include: ["room_type"],
             where: {
                 [Op.or]: {
-                    name_customer: { [Op.like]: `%${keyword}%` },
+                    name_customer: {
+                        [Op.like]: `%${keyword}%`
+                    },
                 },
             },
         });
@@ -332,7 +340,7 @@ const findBookingByNameCustomer = async (req, res) => {
     }
 };
 
-const findBookingByIdCustomer = async (req, res) => {
+const findBookingByIdCustomer = async(req, res) => {
     try {
         const params = {
             id_customer: req.params.id_customer

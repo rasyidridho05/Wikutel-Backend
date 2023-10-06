@@ -7,7 +7,7 @@ const roomType = model.room_type;
 
 const Op = Sequelize.Op;
 
-const addRoomType = async (req, res) => {
+const addRoomType = async(req, res) => {
     try {
         const data = {
             name_room_type: req.body.name_room_type,
@@ -31,7 +31,7 @@ const addRoomType = async (req, res) => {
     }
 };
 
-const updateRoomType = async (req, res) => {
+const updateRoomType = async(req, res) => {
     try {
         const params = {
             id_room_type: req.params.id_room_type,
@@ -81,7 +81,7 @@ const updateRoomType = async (req, res) => {
     }
 };
 
-const deleteRoomType = async (req, res) => {
+const deleteRoomType = async(req, res) => {
     try {
         const params = {
             id_room_type: req.params.id_room_type,
@@ -116,7 +116,7 @@ const deleteRoomType = async (req, res) => {
     }
 };
 
-const getAllRoomType = async (req, res) => {
+const getAllRoomType = async(req, res) => {
     try {
         const result = await roomType.findAll();
         return res.status(200).json({
@@ -134,7 +134,7 @@ const getAllRoomType = async (req, res) => {
     }
 };
 
-const getOneRoomType = async (req, res) => {
+const getOneRoomType = async(req, res) => {
     try {
         const params = {
             id_room_type: req.params.id_room_type,
@@ -145,7 +145,7 @@ const getOneRoomType = async (req, res) => {
                 message: "Data not found!"
             });
         }
-        
+
         return res.status(200).json({
             message: "Success to get one room type",
             code: 200,
@@ -160,16 +160,19 @@ const getOneRoomType = async (req, res) => {
     }
 };
 
-const findRoomTypeDataFilter = async (req, res) => {
+const findRoomTypeDataFilter = async(req, res) => {
     try {
         const keyword = req.body.keyword
 
         const result = await roomType.findAll({
             where: {
                 [Op.or]: {
-                    name_room_type: { [Op.like]: `%${keyword}%` },
-                    price: { [Op.like]: `%${keyword}%` },
-                    description: { [Op.like]: `%${keyword}%` }
+                    name_room_type: {
+                        [Op.like]: `%${keyword}%` },
+                    price: {
+                        [Op.like]: `%${keyword}%` },
+                    description: {
+                        [Op.like]: `%${keyword}%` }
                 }
             }
         });
