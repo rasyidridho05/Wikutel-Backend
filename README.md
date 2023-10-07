@@ -6,9 +6,14 @@
 
 ### Get Started
 Cloning command `git clone https://github.com/rasyidridho05/Wikutel-Backend.git`
+
 Run the Apache and MySQL in XAMPP.
+
 Upload file `ukk_hotel.sql` on your phpmyadmin.
+
 Running Backend `nodemon` or `npm run start`.
+
+Stop running command `CTRL + C`
 
 ### Folder Structure
 1. auth | Authorizations
