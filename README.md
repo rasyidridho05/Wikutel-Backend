@@ -11,9 +11,12 @@ Run the Apache and MySQL in XAMPP.
 
 Upload file `ukk_hotel.sql` on your phpmyadmin.
 
+Install node modules `npm i`
+
 Running Backend `nodemon` or `npm run start`.
 
 Stop running command `CTRL + C`
+
 
 ### Folder Structure
 1. auth | Authorizations
