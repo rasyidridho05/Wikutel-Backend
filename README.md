@@ -29,7 +29,7 @@ Stop running command `CTRL + C`
 8. utils | upload image handler
 9. index.js
 
-### Dependedncies 
+### Dependencies 
 1. body-parser
 2. cors
 3. express.js
